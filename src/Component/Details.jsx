@@ -1,49 +1,83 @@
-import React, { useContext } from "react";
-// import { useParams } from "react-router-dom";
-import { FoodDetailscontext } from "../Context/FoodDetailscontext";
-import Box from "@mui/material/Box";
+// import * as React from "react";
+import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { FoodDetailscontext } from "../Context/FoodDetailscontext";
+import { useContext, useState } from "react";
+import { FavtItemsContext } from "../Context/FavtItemsContext";
+import { useEffect } from "react";
 
-const Details = () => {
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+export default function Details() {
+  const [expanded, setExpanded] = useState(false);
   const { list } = useContext(FoodDetailscontext);
-  // console.log(list);
+  const { setEmpty } = useContext(FavtItemsContext);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
-    <div>
-      <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {list.Menu_Items}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {list.Menu_Category}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {list.Per_Serve_Size}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon
+            onClick={() => {
+              setEmpty(list);
+            }}
+          />
+        </IconButton>
+
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {list.Menu_Items}
-          </Typography>
-          <Typography variant="h5" component="div">
-            Per_Serve_Size {list.Per_Serve_Size}
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Energy_kCal:{list.Energy_kCal}
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Protein_g:{list.Protein_g}
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Total_fat_g:{list.Total_fat_g}
-          </Typography>
-
-          <Typography variant="body2">
-            {/* well meaning and kindly. */}
-            <br />
-            {/* {'"a benevolent smile"'} */}
-          </Typography>
+          <Typography paragraph>Protein_g -{list.Protein_g}</Typography>
+          <Typography paragraph>Sat_Fat_g -{list.Sat_Fat_g}</Typography>
+          <Typography paragraph>Sodium_mg -{list.Sodium_mg}</Typography>
+          <Typography>Total_Sugars_g -{list.Total_Sugars_g}</Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-    </div>
+      </Collapse>
+    </Card>
   );
-};
-
-export default Details;
+}
