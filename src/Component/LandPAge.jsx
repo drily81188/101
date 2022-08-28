@@ -24,9 +24,9 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
 };
-const LandPAge = ({ data }) => {
+const LandPAge = () => {
   const navigate = useNavigate();
-  const { setList } = useContext(FoodDetailscontext);
+  const { setList, data } = useContext(FoodDetailscontext);
   const { handler } = useContext(FavtItemsContext);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -41,15 +41,13 @@ const LandPAge = ({ data }) => {
                 <RestaurantMenuIcon />
                 Menu
               </TableCell>
-
               <TableCell align="right">
                 <CategoryIcon />
                 Category
               </TableCell>
-
-              <TableCell align="right">
+              <TableCell align="center">
                 <FavoriteBorderIcon />
-                Farvotie
+                Favourite
               </TableCell>
               {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
             </TableRow>
@@ -73,15 +71,18 @@ const LandPAge = ({ data }) => {
                 <TableCell align="right">
                   <i>{row.Menu_Category}</i>
                 </TableCell>
-
                 <Button
                   onClick={() => {
                     handler(row);
-                    navigate(`/favt`);
+                    // navigate(`/favt`);
                   }}
-                  align="right"
+                  style={{
+                    alignContent: "center",
+                    border: "2px",
+                    borderColor: "black",
+                  }}
                 >
-                  favarote
+                  Favourite
                 </Button>
                 {/* <TableCell align="right">{row.protein}</TableCell>  */}
               </TableRow>

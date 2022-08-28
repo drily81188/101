@@ -16,13 +16,55 @@ export const Addcart = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div>
-        <HomeIcon
-          onClick={() => {
-            navigate("/");
-          }}
-        />
+      <div
+        style={{
+          border: "20px",
+          background: "black",
+          borderWidth: "35px",
+          background: "black",
+          /* margin-top: 28%; */
+          height: "97px",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row", padding: "2%" }}>
+          <div
+            style={{
+              color: "white",
+              width: "50%",
+              // background: "white",
+            }}
+          >
+            Food App
+          </div>
+          <div
+            style={{
+              width: "50%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              color: "white",
+            }}
+          >
+            <div
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Home
+            </div>
+            <div
+              onClick={() => {
+                // handler(row);
+                navigate(`/favt`);
+              }}
+            >
+              Favourite
+            </div>
+          </div>
+        </div>
       </div>
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>

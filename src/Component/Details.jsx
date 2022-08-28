@@ -33,7 +33,7 @@ const ExpandMore = styled((props) => {
 export default function Details() {
   const [expanded, setExpanded] = useState(false);
   const { list } = useContext(FoodDetailscontext);
-  const { setEmpty } = useContext(FavtItemsContext);
+  const { handler } = useContext(FavtItemsContext);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -56,11 +56,10 @@ export default function Details() {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon
             onClick={() => {
-              setEmpty(list);
+              handler(list);
             }}
           />
         </IconButton>
-
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
